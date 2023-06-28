@@ -467,9 +467,11 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
   }
 
   func cardDidSwipe(_ card: SwipeCard, withDirection direction: SwipeDirection) -> Bool {
-    if (delegate?.cardStackShould?(self, willSwipeCardAt: topCardIndex, with: direction) ?? true) == false {
-        return false
-    }
-    swipeAction(topCard: card, direction: direction, forced: false, animated: true)
+      guard let topCardIndex = topCardIndex else { return false }
+      if (delegate?.cardStackShould?(self, willSwipeCardAt: topCardIndex, with: direction) ?? true) == false {
+          return false
+      }
+      swipeAction(topCard: card, direction: direction, forced: false, animated: true)
+      return true
   }
 }
