@@ -37,4 +37,9 @@ import UIKit
 
   @objc
   optional func didSwipeAllCards(_ cardStack: SwipeCardStack)
+    
+    
+  // add
+  @objc
+  optional func cardStackShould(_ cardStack: SwipeCardStack, willSwipeCardAt index: Int, with direction: SwipeDirection) -> Bool
 }

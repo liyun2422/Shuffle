@@ -29,6 +29,6 @@ protocol SwipeCardDelegate: AnyObject {
   func cardDidCancelSwipe(_ card: SwipeCard)
   func cardDidContinueSwipe(_ card: SwipeCard)
   func cardDidFinishSwipeAnimation(_ card: SwipeCard)
-  func cardDidSwipe(_ card: SwipeCard, withDirection direction: SwipeDirection)
+  func cardDidSwipe(_ card: SwipeCard, withDirection direction: SwipeDirection) -> Bool
   func cardDidTap(_ card: SwipeCard)
 }

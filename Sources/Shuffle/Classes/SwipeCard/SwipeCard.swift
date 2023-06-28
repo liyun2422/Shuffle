@@ -177,7 +177,13 @@ open class SwipeCard: SwipeView {
   override open func didSwipe(_ recognizer: UIPanGestureRecognizer,
                               with direction: SwipeDirection) {
     super.didSwipe(recognizer, with: direction)
-    delegate?.cardDidSwipe(self, withDirection: direction)
+      if let delegate = delegate {
+          if delegate.cardDidSwipe(self, withDirection: direction) == false {
+              delegate?.cardDidCancelSwipe(self)
+              animator.animateReset(on: self)
+              return
+          }
+      }
     swipeAction(direction: direction, forced: false)
   }
 
