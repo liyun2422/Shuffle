@@ -126,6 +126,7 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
   }
 
   static let backgroundCardOffsetY: CGFloat = 25
+  static let backgroundCardOffsetScaleAlpha: CGFloat = 0.6
   static let backgroundCardOffsetScaleX: CGFloat = 0.95
   static let backgroundCardOffsetScaleY: CGFloat = 0.95
     
@@ -136,7 +137,7 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
         card.alpha = 1
     } else {
         card.frame = CGRect(origin: CGPoint(x: 0, y: SwipeCardStack.backgroundCardOffsetY), size: cardContainer.frame.size)
-        card.alpha = 0.1
+        card.alpha = SwipeCardStack.backgroundCardOffsetScaleAlpha
     }
     card.transform = transform(forCardAtPosition: position)
     card.isUserInteractionEnabled = position == 0
@@ -183,7 +184,7 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
     }
 
     func backgroundCardDragAlpha(percentage: CGFloat) -> CGFloat {
-        return 0.1 + (0.9 * percentage)
+        return SwipeCardStack.backgroundCardOffsetScaleAlpha + ((1 - SwipeCardStack.backgroundCardOffsetScaleAlpha) * percentage)
     }
 
   // MARK: - Gesture Recognizers
