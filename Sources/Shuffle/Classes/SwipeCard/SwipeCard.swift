@@ -38,6 +38,8 @@ open class SwipeCard: SwipeView {
     }
   }
 
+  public var alphaView: UIView?
+
   /// The the footer view.
   public var footer: UIView? {
     didSet {

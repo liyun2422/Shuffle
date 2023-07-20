@@ -134,10 +134,10 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
     card.transform = .identity
     if position == 0 {
         card.frame = CGRect(origin: .zero, size: cardContainer.frame.size)
-        card.alpha = 1
+        card.alphaView?.alpha = 1
     } else {
         card.frame = CGRect(origin: CGPoint(x: 0, y: SwipeCardStack.backgroundCardOffsetY), size: cardContainer.frame.size)
-        card.alpha = SwipeCardStack.backgroundCardOffsetScaleAlpha
+        card.alphaView?.alpha = SwipeCardStack.backgroundCardOffsetScaleAlpha
     }
     card.transform = transform(forCardAtPosition: position)
     card.isUserInteractionEnabled = position == 0
@@ -240,10 +240,10 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
 
     // Insert new card if needed
     if (stateManager.remainingIndices.count - visibleCards.count) > 0 {
-      let bottomCardIndex = stateManager.remainingIndices[visibleCards.count]
-      if let card = loadCard(at: bottomCardIndex) {
-        insertCard(Card(index: bottomCardIndex, card: card), at: visibleCards.count)
-      }
+        let bottomCardIndex = self.stateManager.remainingIndices[self.visibleCards.count]
+        if let card = self.loadCard(at: bottomCardIndex) {
+            self.insertCard(Card(index: bottomCardIndex, card: card), at: self.visibleCards.count)
+        }
     }
 
     delegate?.cardStack?(self, didSwipeCardAt: swipedIndex, with: direction)
@@ -487,7 +487,7 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
     for (position, backgroundCard) in backgroundCards.enumerated() {
         let percentage = backgroundCardDragPercentage(topCard: card)
         backgroundCard.transform = backgroundCardDragTransform(percentage: percentage, currentPosition: position + 1)
-        backgroundCard.alpha = backgroundCardDragAlpha(percentage: percentage)
+        backgroundCard.alphaView?.alpha = backgroundCardDragAlpha(percentage: percentage)
     }
   }
 
@@ -504,7 +504,7 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
       if (delegate?.cardStackShould?(self, willSwipeCardAt: topCardIndex, with: direction) ?? true) == false {
           return false
       }
-      swipeAction(topCard: card, direction: direction, forced: false, animated: true)
+      self.swipeAction(topCard: card, direction: direction, forced: false, animated: true)
       return true
   }
 }
