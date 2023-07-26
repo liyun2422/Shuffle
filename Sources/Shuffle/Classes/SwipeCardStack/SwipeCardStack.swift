@@ -63,6 +63,8 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
     return visibleCards.first?.index
   }
 
+  public var stackEnable: Bool = true
+
   var numberOfVisibleCards: Int = 2
 
   /// An ordered array containing all pairs of currently visible cards.
@@ -70,7 +72,7 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
   /// The `Card` at the first position is the topmost `SwipeCard` in the view hierarchy.
   var visibleCards: [Card] = []
 
-  var topCard: SwipeCard? {
+  public var topCard: SwipeCard? {
     return visibleCards.first?.card
   }
 
@@ -190,6 +192,7 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
   // MARK: - Gesture Recognizers
 
   override open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    guard self.stackEnable else { return false }
     guard let topCard = topCard, topCard.panGestureRecognizer == gestureRecognizer else {
       return super.gestureRecognizerShouldBegin(gestureRecognizer)
     }
@@ -240,10 +243,10 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
 
     // Insert new card if needed
     if (stateManager.remainingIndices.count - visibleCards.count) > 0 {
-        let bottomCardIndex = self.stateManager.remainingIndices[self.visibleCards.count]
-        if let card = self.loadCard(at: bottomCardIndex) {
-            self.insertCard(Card(index: bottomCardIndex, card: card), at: self.visibleCards.count)
-        }
+      let bottomCardIndex = self.stateManager.remainingIndices[self.visibleCards.count]
+      if let card = self.loadCard(at: bottomCardIndex) {
+        self.insertCard(Card(index: bottomCardIndex, card: card), at: self.visibleCards.count)
+      }
     }
 
     delegate?.cardStack?(self, didSwipeCardAt: swipedIndex, with: direction)
