@@ -262,9 +262,9 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
                           direction: direction,
                           forced: forced,
                           animated: animated) { [weak self] finished in
-      if finished {
+//      if finished {
         self?.isAnimating = false
-      }
+//      }
     }
   }
 
